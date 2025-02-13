@@ -22,7 +22,7 @@ body {
 }
 .v-application {
     display: flex;
-    background: rgb(0 30 0);
+    background: linear-gradient(to top, #000000, #00270f);
     color: rgb(0 255 0 / 90%);
 }
 .app {
