@@ -1,22 +1,28 @@
 <template>
-  <v-container>
-    <h4>Usuários Existentes</h4>
-    <v-list>
-      <v-list-item-group>
-        <v-list-item v-for="usuario in usuarios" :key="usuario.id" class="bg-dark text-white">
-          <v-list-item-content>
-            <v-list-item-title>{{ usuario.Nome }}</v-list-item-title>
-          </v-list-item-content>
-          <v-list-item-action>
+  <v-container fluid>
+    <v-row>
+      <v-col cols="12">
+        <h4 class="mb-2">Usuários Existentes</h4>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col v-for="usuario in usuarios" :key="usuario.id" 
+            cols="8"   
+            sm="6"      
+            md="4"     
+            lg="2">
+        <v-card class="User1 text-white" elevation="16">
+          <v-card-title>{{ usuario.Nome }}</v-card-title>
+          <v-card-actions>
             <v-btn @click="openEditUser (usuario)" color="warning" small>Editar</v-btn>
-          </v-list-item-action>
-        </v-list-item>
-      </v-list-item-group>
-    </v-list>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+    </v-row>
 
     <!-- Modal para Editar Usuário -->
     <v-dialog v-model="editDialog" max-width="600px">
-      <v-card>
+      <v-card class="User2 text-white">
         <v-card-title>
           <span class="headline">Editar Usuário</span>
           <v-spacer></v-spacer>
@@ -27,13 +33,13 @@
         <v-card-text>
           <v-form ref="form" v-model="valid">
             <v-text-field
-              v-model="selectedUser.Nome"
+              v-model="selectedUser .Nome"
               label="Nome"
               :rules="[v => !!v || 'Nome é obrigatório']"
               required
             ></v-text-field>
             <v-select
-              v-model="selectedUser.função"
+              v-model="selectedUser .função"
               :items="funcoes"
               item-value="value"
               item-title="text"
@@ -65,12 +71,12 @@ export default {
   data() {
     return {
       usuarios: [], // Armazena a lista de usuários
-      selectedUser: {}, // Armazena o usuário selecionado para edição
+      selectedUser:  {}, // Armazena o usuário selecionado para edição
       editDialog: false, // Controle do modal de edição
       funcoes: [
-        { value: 1, text: 'Mestre' }, // Role for Game Master
-        { value: 2, text: 'Jogador' }, // Role for Player
-        { value: 3, text: 'Visitante' }, // Role for Visitor
+        { value: 1, text: 'Mestre' }, // Função para Mestre
+        { value: 2, text: 'Jogador' }, // Função para Jogador
+        { value: 3, text: 'Visitante' }, // Função para Visitante
       ],
       valid: false, // Validação do formulário
       snackbar: false, // Controle do snackbar
@@ -96,19 +102,18 @@ export default {
     closeEditDialog() {
       this.editDialog = false; // Fecha o modal de edição
     },
-    async saveUser  () {
+    async saveUser () {
       if (this.$refs.form.validate()) {
         try {
-          await axios.put(`/api/usuarios/${this.selectedUser.id}`, {
-            Nome: this.selectedUser.Nome,
-            função: this.selectedUser.função,
+          await axios.put(`/api/usuarios/${this.selectedUser .id}`, {
+            Nome: this.selectedUser .Nome,
+            função: this.selectedUser .função,
           });
           this.snackbarMessage = 'Usuário editado com sucesso!';
           this.snackbar = true; // Exibe o snackbar
           this.fetchUsuarios(); // Atualiza a lista de usuários
           this.closeEditDialog(); // Fecha o modal
         } catch (error) {
-          // Exibe a mensagem de erro do servidor, se disponível
           const errorMessage = error.response?.data?.message || 'Erro ao editar usuário. Tente novamente.';
           this.snackbarMessage = errorMessage;
           this.snackbar = true; // Exibe o snackbar
@@ -121,10 +126,32 @@ export default {
 </script>
 
 <style scoped>
-.bg-dark {
-  background-color: #343a40 !important; /* Cor de fundo escura */
+
+/* Estilo para o fundo escuro */
+.User1 {
+  display: grid;
+  place-items: center;
+  place-content: center;
+  height: 13vh;
+  background-color: rgba(10, 20, 10, 0.90) !important; /* Cor de fundo escura e semi-transparente */
 }
+
+.User2 {
+  height: 13vh;
+  background-color: rgba(10, 20, 10, 0.90) !important; /* Cor de fundo escura e semi-transparente */
+}
+
+/* Estilo para o texto branco */
 .text-white {
-  color: white !important; /* Cor do texto branca */
+  color: rgb(255, 255, 255) !important; /* Cor do texto branca */
+}
+
+/* Estilo para o botão de edição */
+.v-btn {
+  transition: background-color 0.3s; /* Transição suave para o botão */
+}
+
+.v-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Efeito hover no botão */
 }
 </style>

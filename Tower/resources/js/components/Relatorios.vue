@@ -63,7 +63,10 @@
   
   <style scoped>
   .bg-dark {
-    background-color: #343a40 !important;
+    display: grid;
+    place-items: center;
+    place-content: center;
+    background-color: rgba(10, 20, 10, 0.90) !important; /* Cor de fundo escura e semi-transparente */
   }
   .text-white {
     color: #ffffff !important;
