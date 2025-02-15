@@ -3,13 +3,16 @@
     <canvas :style="{ width: '90vh', height: '90vh' }" class="background-canvas" ref="el"></canvas>
   </div>
   <v-container class="login-container">
-    <v-card elevation="16">
-      <v-tabs v-model="tab" bg-color="primary">
+    <v-card>
+      <div class="logobox">
+      <img src="./@/assets/logo.svg" alt="Logo" class="logo" />
+      </div>
+      <v-tabs v-model="tab" bg-color="primary" align-tabs="center">
         <v-tab value="login">Login</v-tab>
         <v-tab value="register">Cadastro</v-tab>
       </v-tabs>
 
-      <v-card-text elevation="16">
+      <v-card-text elevation="60">
         <v-tabs-window v-model="tab">
           <v-tabs-window-item value="login">
             <v-form @submit.prevent="login">
@@ -149,6 +152,18 @@ export default {
   padding: 20px;
 }
 
+.logobox{
+  width: 100%;
+  height: 100%;
+  background-color: rgba(30, 60, 30, 0.90) !important;
+}
+
+.logo {
+    padding-bottom: 1vh;
+    width: 15vh;
+    justify-self: center;
+}
+
 .bg {
   position: absolute; /* Posiciona o canvas atrás dos outros elementos */
   width: 100%;
@@ -173,7 +188,6 @@ export default {
 }
 
 .bg-primary {
-  box-shadow: 0 8px 10px -5px var(--v-shadow-key-umbra-opacity, rgba(0, 0, 0, .2)), 0 16px 24px 2px var(--v-shadow-key-penumbra-opacity, rgba(0, 0, 0, .14)), 0 6px 30px 5px var(--v-shadow-key-ambient-opacity, rgba(0, 0, 0, .12)) !important;
     --v-theme-overlay-multiplier: var(--v-theme-primary-overlay-multiplier);
     background-color: rgba(30, 60, 30, 0.90) !important;
     color: rgb(var(--v-theme-on-primary)) !important;
