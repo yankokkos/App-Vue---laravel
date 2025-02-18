@@ -5,12 +5,17 @@ use App\Http\Controllers\UsuarioController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\FichaController;
-use Illuminate\Support\Facades\DB;
+use App\Models\Ficha; // Certifique-se de importar o modelo Ficha
 
 // Rota para a página inicial
 Route::get('/', function () {
     return view('welcome');
 });
+
+// Rota para a página de teste
+Route::get('/test', function () {
+    return view('test'); // Retorna a view de teste
+})->name('test');
 
 // Rotas para gerenciamento de usuários
 Route::prefix('api/usuarios')->group(function () {
@@ -42,8 +47,6 @@ Route::post('login', [UsuarioController::class, 'login']);
 Route::get('/api/user', function (Request $request) {
     return response()->json($request->user()); // Retorna os dados do usuário autenticado
 })->middleware('auth'); // Protegendo a rota com middleware de autenticação
-
-use App\Models\Ficha; // Certifique-se de importar o modelo Ficha
 
 // Rota para obter fichas do usuário autenticado
 Route::get('/api/fichas', function (Request $request) {
